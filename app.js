@@ -20,11 +20,11 @@ var express = require('express')
 
 
 // DB CONNECTION
-// if(process.env.NODE_ENV === 'production'){
+if(process.env.NODE_ENV === 'production'){
   mongoose.connect(process.env.MONGO_URL);
-// } else {
-  // mongoose.connect('mongodb://localhost/cookbook');
-// }
+} else {
+  mongoose.connect('mongodb://localhost/cookbook');
+}
 
 
 var app = module.exports = express();
@@ -32,6 +32,7 @@ var app = module.exports = express();
 // Configuration
 
 app.configure(function(){
+  app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.set('view options',{layout: 'layout'});
@@ -95,6 +96,6 @@ controller_files.forEach(function (file) {
 
 // Start server
 
-app.listen(5000, function(){
-  console.log("Express server listening on port %d in %s mode", 5000, app.settings.env);
+app.listen(app.get('port'), function(){
+  console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
 });
