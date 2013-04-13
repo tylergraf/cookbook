@@ -1,0 +1,4 @@
+<div ng-repeat='recipe in recipes'>
+  <h3><a href="/recipe/{{recipe._id}}" ng-bind-html-unsafe="recipe.title"></a></h3> 
+  <h4 ng-bind-html-unsafe="recipe.subtitle"></h4> 
+</div>

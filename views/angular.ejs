@@ -1,0 +1,30 @@
+<% assets = {
+  css: [
+  'icons.css'
+  ],
+  js: [
+  'lib/angular/angular.js',
+  'app.js',
+  'services.js',
+  'controllers.js',
+  'filters.js',
+  'directives.js'
+  ]
+} %>
+<div class="page-wrapper">
+  <div ng-controller="LeftNav" class="left-nav">
+    <div class="search-wrapper">
+      <form novalidate class="search-form">
+        <i class="icon cook-icon-magnifying-glass"></i>
+        <input type="text" placeholder="So Many Searches..." ng-model="searchTerm" class="search-term">
+      </form>
+    </div>
+    <div class="left-nav-inside" search-results="searchTerm" select-recipe >
+      <ul browse></ul>
+    </div>
+  </div>
+  <div class="main">
+    <div ng-view></div>
+  </div>
+</div>
+

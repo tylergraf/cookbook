@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <title>Tyler Graf</title>
+  <meta name="description" content="Home">
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="icon" href="/css/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="/css/lib/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/lib/bootstrap-responsive.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/cookbook.css">
+  <% if(typeof assets != "undefined" && assets.css) { %>
+    <% for(var filename in assets.css) { %>
+      <link rel="stylesheet" type="text/css" href="/css/<%= assets.css[filename] %>">
+    <% } %>
+  <% } %>
+  <script type="text/javascript" src="//use.typekit.net/nga8gjw.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body ng-app="myApp">
+  <header class="header">
+    <h1 class="logo">Gretchen&#39;s Cookbook</h1>
+  </header>
+<%- body %>
+
+  
+  <script src="/js/lib/jquery-1.9.0.min.js"></script>
+
+  <% if(typeof assets != "undefined" && assets.js) { %>
+    <% for(var filename in assets.js) { %>
+      <script src="/js/<%= assets.js[filename] %>"></script>
+    <% } %>
+  <% } %>
+  
+</body>
+</html>
