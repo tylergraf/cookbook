@@ -21,7 +21,7 @@ var express = require('express')
 
 // DB CONNECTION
 if(process.env.NODE_ENV === 'production'){
-  mongoose.connect(process.env.MONGO_URL);
+  mongoose.connect(process.env.MONGOHQ_URL);
 } else {
   mongoose.connect('mongodb://localhost/cookbook');
 }
