@@ -238,3 +238,46 @@ body {
   color: #e9b4b3;
   font-size: 26px;
 }
+
+@media (max-width: 979px) {
+  html,
+  body,
+  .page-wrapper {
+    min-height: auto;
+    height: auto;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+  }
+  .page-wrapper {
+    margin-top: 100px;
+  }
+  .main {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    right: auto;
+    border-top: 0;
+  }
+  .left-nav {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    right: auto;
+    margin: 0;
+    width: auto;
+    border-top: 0
+  }
+  .left-nav .left-nav-inside {
+    z-index: 10;
+    max-height: 240px;
+    position: relative;
+    width: auto;
+    top: auto;
+    left: auto;
+    bottom: auto;
+    right: auto;
+  }
+}

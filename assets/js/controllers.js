@@ -23,17 +23,19 @@ function SubcategoryCtrl($scope, $http, $routeParams) {
     });
 }
 function RecipeCtrl($scope, $http, $routeParams, localStorageService) {
-  var recipe = localStorageService.get($routeParams.id);
-  console.log(recipe);
-  if(recipe){
-    $scope.recipe = JSON.parse(recipe);
-  } else {
-    $http.get('/api/recipe/'+$routeParams.id).
-      success(function(data, status, headers, config) {
-        localStorageService.add(data._id,JSON.stringify(data));
+  // var recipe = localStorageService.get($routeParams.id);
+  // if(recipe){
+  //   $scope.recipe = JSON.parse(recipe);
+  // } else {
+    $http({
+      method: 'GET',
+      url: '/api/recipe/'+$routeParams.id,
+      cache: true})
+      .success(function(data, status, headers, config) {
+        // localStorageService.add(data._id,JSON.stringify(data));
         $scope.recipe = data;
       });
-  }
+  // }
 
 }
 
