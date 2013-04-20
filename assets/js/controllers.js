@@ -16,17 +16,25 @@ function CategoryCtrl($scope, $http, $routeParams) {
     });
 }
 function SubcategoryCtrl($scope, $http, $routeParams) {
+  
   $http.get('/api/recipes/'+$routeParams.id).
     success(function(data, status, headers, config) {
       $scope.recipes = data;
     });
 }
-function RecipeCtrl($scope, $http, $routeParams) {
-  $http.get('/api/recipe/'+$routeParams.id).
-    success(function(data, status, headers, config) {
-      // console.log(data);
-      $scope.recipe = data;
-    });
+function RecipeCtrl($scope, $http, $routeParams, localStorageService) {
+  var recipe = localStorageService.get($routeParams.id);
+  console.log(recipe);
+  if(recipe){
+    $scope.recipe = JSON.parse(recipe);
+  } else {
+    $http.get('/api/recipe/'+$routeParams.id).
+      success(function(data, status, headers, config) {
+        localStorageService.add(data._id,JSON.stringify(data));
+        $scope.recipe = data;
+      });
+  }
+
 }
 
 function AddPostCtrl($scope, $http, $location) {

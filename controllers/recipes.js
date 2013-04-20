@@ -5,7 +5,8 @@ var Recipes = require('../models/Recipes.js'),
     mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId,
-    debug = require('debug')('api:recipes');
+    debug = require('debug')('api:recipes'),
+    _ = require('underscore');
 // var categoriesApi = require('../services/categoriesApi');
 
 /**
@@ -20,7 +21,7 @@ module.exports = function(app) {
     res.json(res.recipe);
   });
   app.get("/api/search/:searchTerm", search, function(req, res, next) {
-    res.json(res.recipe);
+    res.json(res.recipes);
   });
 
 };
@@ -30,6 +31,10 @@ function recipes(req, res, next) {
   var subcategoryId = req.params.subcategoryId;
   Recipes.find({subcategory_id: subcategoryId},function (err, recipes) {
     if(err) return next(err);
+
+    recipes.forEach(function(recipe,i){
+      recipes[i] = _.pick(recipe, 'title','_id','subtitle');
+    });
 
     debug('Recipes:',recipes);
 
@@ -54,6 +59,7 @@ function recipe(req, res, next) {
 function search(req, res, next) {
   var searchTerm = req.params.searchTerm;
   searchTerm = searchTerm.replace('&', '&amp;');
+  searchTerm = searchTerm.replace("'", '&#39;');
   debug('searchTerm',searchTerm);
   // searchText.match(/\SIce cream/im)
   var reg = new RegExp(searchTerm,'im');
@@ -63,7 +69,11 @@ function search(req, res, next) {
     if(err) return next(err);
     // debug('Recipe:',output);
 
-    res.recipe = searchResults;
+    searchResults.forEach(function(recipe,i){
+      searchResults[i] = _.pick(recipe, 'title','_id','subtitle');
+    });
+    
+    res.recipes = searchResults;
     next();
   });
 }

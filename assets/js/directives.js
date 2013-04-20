@@ -3,7 +3,7 @@
 /* Directives */
 
 
-angular.module('myApp.directives', []).
+angular.module('cookbookApp.directives', []).
   directive('appVersion', ['version', function(version) {
     return function(scope, elm, attrs) {
       elm.text(version);
@@ -169,38 +169,48 @@ angular.module('myApp.directives', []).
         }
     };
 }).
-  directive('zippy', function($http){
+  directive('ckeditor', function($http){
     return {
       restrict: 'A',
-      // This HTML will replace the zippy directive.
-      replace: true,
-      // transclude: 'ng-repeat',
-      scope: {title: '=',subtitle: '='},
-      // template: '<div ng-repeat="recipe in recipes">'
-                  // +'<h3><a href="/recipe/{{recipe._id}}" ng-bind-html-unsafe="recipe.title"></a></h3>' 
-                  // +'<h4 ng-bind-html-unsafe="recipe.subtitle"></h4>' 
-                // +'</div>',
-      // templateUrl: '/partials/recipes',
-      controller: theController,
-      // The linking function will add behavior to the template
+      replace: false,
       link: function(scope, element, attrs) {
-            // Title element
-        // var title = angular.element(element.children()[0]),
-            // Opened / closed state
-            // opened = true;
- 
-        // Clicking on title should open/close the zippy
-        // title.bind('click', toggle);
- 
-        // Toggle the closed/opened state
-        // function toggle() {
-          // opened = !opened;
-          // element.removeClass(opened ? 'closed' : 'opened');
-          // element.addClass(opened ? 'opened' : 'closed');
+
+        // var stuff = angular.element('#recipeTitle').ckeditor();
+// debugger
+
+        // var editor;
+
+        // // The instanceReady event is fired, when an instance of CKEditor has finished
+        // // its initialization.
+        // CKEDITOR.on( 'instanceReady', function( ev ) {
+        //   editor = ev.editor;
+
+        //   // Show this "on" button.
+        //   document.getElementById( 'readOnlyOn' ).style.display = '';
+
+        //   // Event fired when the readOnly property changes.
+        //   editor.on( 'readOnly', function() {
+        //     document.getElementById( 'readOnlyOn' ).style.display = this.readOnly ? 'none' : '';
+        //     document.getElementById( 'readOnlyOff' ).style.display = this.readOnly ? '' : 'none';
+        //   });
+        // });
+
+        // function toggleReadOnly( isReadOnly ) {
+        //   // Change the read-only state of the editor.
+        //   // http://docs.ckeditor.com/#!/api/CKEDITOR.editor-method-setReadOnly
+        //   editor.setReadOnly( isReadOnly );
         // }
- 
-        // initialize the zippy
-        // toggle();
+
+
+
+        // var editing = false,
+        //     editor,
+        //     title = document.getElementById('recipeTitle');
+
+
+        // // debugger
+        // editor = CKEDITOR.inline(title);
+
       }
     }
   });

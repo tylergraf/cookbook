@@ -5,5 +5,25 @@
 
 // Demonstrate how to register services
 // In this case it is a simple value service.
-angular.module('myApp.services', []).
-  value('version', '0.1');
+angular.module('cookbookApp.services', [])
+  .factory('localStorageCheck',function(localStorageService){
+    return {
+      check: function (id) {
+
+        var recipe = localStorageService.get(id);
+        if(recipe){
+          console.log('recipe found');
+          console.log(recipe);
+          return JSON.stringify(recipe);
+        } else {
+          console.log('recipe not found');
+          return false;
+        }
+
+
+        console.log(localStorageService);
+        return 'stuff'
+      }
+    }
+  });
+
