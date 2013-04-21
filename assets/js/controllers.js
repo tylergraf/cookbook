@@ -30,7 +30,7 @@ function RecipeCtrl($scope, $http, $routeParams, localStorageService) {
     $http({
       method: 'GET',
       url: '/api/recipe/'+$routeParams.id,
-      cache: true})
+      cache: false})
       .success(function(data, status, headers, config) {
         // localStorageService.add(data._id,JSON.stringify(data));
         $scope.recipe = data;

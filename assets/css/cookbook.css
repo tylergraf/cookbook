@@ -34,11 +34,9 @@ body {
 .logo {
   color: #fffbde;
   margin: 0;
-  line-height: 90px;
   text-align: center;
   font-family: 'blanchcaps';
   font-weight: normal;
-  font-size: 80px;
 }
 .logo a { 
   color: #fffbde;
@@ -86,6 +84,22 @@ body {
   left: 5px;
   top: 10px;
 }
+.search-form .icon.search-clear {
+  left: auto;
+  right: 9px;
+  cursor: pointer;
+  font-family: Helvetica;
+  font-style: normal;
+  font-weight: bold;
+  background: #b5ddc2;
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+}
 .search-form .search-term {
   display: block;
   background: none;
@@ -100,7 +114,7 @@ body {
   padding: 0;
   vertical-align: top;
   line-height: 32px;
-  width: 285px;
+  width: auto;
   margin-left: 28px;
 }
 .heading2,
@@ -183,7 +197,6 @@ body {
   bottom: 0;
   border: 20px solid #b5ddc2;
   padding: 20px;
-  padding-bottom: 100px;
   overflow-y: auto;
   padding-top: 10px;
 }
@@ -251,6 +264,62 @@ body {
   }
   .page-wrapper {
     margin-top: 100px;
+  }
+  .main {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    right: auto;
+    border-top: 0;
+  }
+  .left-nav {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    right: auto;
+    margin: 0;
+    width: auto;
+    border-top: 0
+  }
+  .left-nav .left-nav-inside {
+    z-index: 10;
+    max-height: 240px;
+    position: relative;
+    width: auto;
+    top: auto;
+    left: auto;
+    bottom: auto;
+    right: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  html,
+  body,
+  .page-wrapper {
+    min-height: auto;
+    height: auto;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+  }
+  .header {
+    height: 50px;
+  }
+  .logo a { 
+    color: #fffbde;
+    margin: 0;
+    line-height: 40px;
+    text-align: center;
+    font-family: 'blanchcaps';
+    font-weight: normal;
+    font-size: 40px;
+    transition: opacity .1s;
+  }
+  .page-wrapper {
+    margin-top: 50px;
   }
   .main {
     position: relative;

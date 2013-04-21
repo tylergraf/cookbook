@@ -73,14 +73,23 @@ angular.module('cookbookApp.directives', []).
         scope: false,
         replace: false,
         link: function (scope, iterStartElement, attr) {
+
+          $('.search-clear').click(function () {
+            scope.searchTerm = '';
+            scope.$apply();
+          })
           scope.$watch(attr.searchResults,function(){
-            function successCallback(data) {
-              scope.recipes = data;
-              scope.selected = 0;
-              angular.forEach(scope.recipes, function(recipe, index){
-                recipe.selected = 'unselected';
-                if(index == 0) recipe.selected = 'selected';
-              });
+            function successCallback(data,e,f,req) {
+              var sTerm = req.url.split('/')[3];
+              if(scope.searchTerm === sTerm){
+                scope.recipes = data;
+                scope.selected = 0;
+                angular.forEach(scope.recipes, function(recipe, index){
+                  recipe.selected = 'unselected';
+                  if(index == 0) recipe.selected = 'selected';
+                });
+              }
+              
             }
             if(scope.searchTerm != '' && !angular.isUndefined(scope.searchTerm)){
               $http.get('/api/search/'+scope.searchTerm).success(successCallback);

@@ -29,7 +29,7 @@ module.exports = function(app) {
 
 function recipes(req, res, next) {
   var subcategoryId = req.params.subcategoryId;
-  Recipes.find({subcategory_id: subcategoryId},function (err, recipes) {
+  Recipes.find({subcategory_id: subcategoryId}).sort({ title: 1}).exec(function (err, recipes) {
     if(err) return next(err);
 
     recipes.forEach(function(recipe,i){
@@ -65,14 +65,14 @@ function search(req, res, next) {
   var reg = new RegExp(searchTerm,'im');
   debug('reg',reg);
 
-  Recipes.find({'title': reg}).limit(50).exec(function (err, searchResults) {
+  Recipes.find({'title': reg}).sort({ title: 1}).limit(50).exec(function (err, searchResults) {
     if(err) return next(err);
     // debug('Recipe:',output);
 
     searchResults.forEach(function(recipe,i){
       searchResults[i] = _.pick(recipe, 'title','_id','subtitle');
     });
-    
+
     res.recipes = searchResults;
     next();
   });
