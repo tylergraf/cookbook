@@ -328,6 +328,7 @@ body {
     bottom: auto;
     right: auto;
     border-top: 0;
+    border-width: 10px;
   }
   .left-nav {
     position: relative;
@@ -337,7 +338,8 @@ body {
     right: auto;
     margin: 0;
     width: auto;
-    border-top: 0
+    border-width: 10px;
+    border-top: 0;
   }
   .left-nav .left-nav-inside {
     z-index: 10;
