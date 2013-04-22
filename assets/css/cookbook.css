@@ -88,17 +88,12 @@ body {
   left: auto;
   right: 9px;
   cursor: pointer;
-  font-family: Helvetica;
-  font-style: normal;
-  font-weight: bold;
-  background: #b5ddc2;
   height: 20px;
   width: 20px;
   text-align: center;
-  border-radius: 50%;
-  font-size: 16px;
-  line-height: 20px;
-  color: #fff;
+  font-size: 18px;
+  color: #b5ddc2;
+  line-height: 1.4em;
 }
 .search-form .search-term {
   display: block;

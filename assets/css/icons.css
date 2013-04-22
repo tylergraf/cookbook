@@ -27,7 +27,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="cook-icon-"] {
 */
-.cook-icon-magnifying-glass {
+.cook-icon-magnifying-glass, .cook-icon-x-altx-alt {
 	font-family: 'cookbook';
 	speak: none;
 	font-style: normal;
@@ -39,4 +39,7 @@ you can use the generic selector below, but it's slower:
 }
 .cook-icon-magnifying-glass:before {
 	content: "\e000";
+}
+.cook-icon-x-altx-alt:before {
+	content: "\e001";
 }
