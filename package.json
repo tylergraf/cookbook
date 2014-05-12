@@ -14,6 +14,12 @@
     "ejs": "~0.8.3",
     "debug": "~0.7.2",
     "mongoose-text-search": "0.0.2",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "etagify": "0.0.2",
+    "passport-facebook": "~1.0.3",
+    "bcrypt": "~0.7.8",
+    "wkhtmltopdf": "~0.1.4",
+    "pdfkit": "~0.6.2",
+    "pdfkitjs": "0.0.5"
   }
 }

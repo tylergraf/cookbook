@@ -1,0 +1,24 @@
+<div class="page">
+  <h1 class="heading-1">Create Account</h1>
+  <form ng-submit="createAccount(email, password)" class="form form-create-account">
+    <div class="input-wrapper">
+      <input type="text" ng-model="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Email">
+    </div>
+    <div class="input-wrapper">
+      <input type="password" ng-model="password" placeholder="Password">
+    </div>
+    <p><button class="btn btn-green" type="submit">Create Account</button></p>
+  </form>
+<!-- <form class="form form-create-account" ng-submit="c(account)">
+  <div class="input-wrapper">
+    <input type="text" ng-model="account.name" placeholder="Name (What your kids call you)">
+  </div>
+  <div class="input-wrapper">
+    <input type="text" ng-model="account.email" placeholder="Email">
+  </div>
+  <div class="input-wrapper">
+    <input type="password" ng-model="account.password" placeholder="Password">
+  </div>
+  <p><button class="btn" type="submit">Create Account</button></p>
+</form> -->
+<p><a href="/login">Login</a></p>

@@ -8,68 +8,10 @@ angular.module('cookbookApp.directives', []).
     return function(scope, elm, attrs) {
       elm.text(version);
     };
-  }]).directive('searchRecipes', function($timeout, dateFilter) {
-    // return the directive link function. (compile function not needed)
-    return {
-    // template: '<div></div>',
-    // templateUrl: 'directive.html',
-    // replace: false,
-    // transclude: false,
-    // restrict: 'A',
-    // scope: false,
-    compile: function compile(tElement, tAttrs, transclude) {
-      return {
-        pre: function preLink(scope, iElement, iAttrs, controller) {
-      // console.log('got here');
-
-        },
-        post: function postLink(scope, iElement, iAttrs, controller) {
-      // console.log('got here');
-
-        }
-      }
-    },
-    link: function postLink(scope, element, attrs) {
-      console.log('got here');
-    }
-  };
-  // function(scope, element, attrs) {
-      
-      // var format,  // date format
-      //     timeoutId; // timeoutId, so that we can cancel the time updates
- 
-      // // used to update the UI
-      // function updateTime() {
-      //   element.text(dateFilter(new Date(), format));
-      // }
- 
-      // // watch the expression, and update the UI on change.
-      // scope.$watch(attrs.searchRecipes, function(value) {
-      //   format = value;
-      //   updateTime();
-      // });
- 
-      // // schedule update in one second
-      // function updateLater() {
-      //   // save the timeoutId for canceling
-      //   timeoutId = $timeout(function() {
-      //     updateTime(); // update DOM
-      //     updateLater(); // schedule another update
-      //   }, 1000);
-      // }
- 
-      // // listen on DOM destroy (removal) event, and cancel the next UI update
-      // // to prevent updating time after the DOM element was removed.
-      // element.bind('$destroy', function() {
-      //   $timeout.cancel(timeoutId);
-      // });
- 
-      // updateLater(); // kick off the UI update process.
-    // }
-  }).directive('searchResults', function ($http) {
+  }]).directive('popularRecipes', function ($http) {
     return {
         restrict: 'A',
-        templateUrl: '/partials/test',
+        templateUrl: '/partials/recipeTitle',
         scope: false,
         replace: false,
         link: function (scope, iterStartElement, attr) {
@@ -89,10 +31,94 @@ angular.module('cookbookApp.directives', []).
                   if(index == 0) recipe.selected = 'selected';
                 });
               }
-              
+
             }
             if(scope.searchTerm != '' && !angular.isUndefined(scope.searchTerm)){
               $http.get('/api/search/'+scope.searchTerm).success(successCallback);
+            } else {
+              scope.recipes = [];
+            }
+          });
+        }
+    };
+}).directive('addFavorite', function ($http, FavoriteService,$rootScope) {
+    return {
+        restrict: 'A',
+        template: '<span class="edit btn">{{favText}}</span>',
+        replace: true,
+        scope: {
+          recipeId: '='
+        },
+        link: function (scope, elem, attr) {
+          scope.favText = 'Add to Favorites';
+          scope.favorited = false;
+          if(!$rootScope.user){
+            $(elem).hide();
+            return false;
+          }
+          scope.addFavorite = function(){
+            if(scope.favorited){
+              FavoriteService.delete(scope.recipeId)
+                .then(function(data){
+                  scope.favText = "Add to Favorites";
+                  scope.favorited = false;
+                },function(err){
+                  console.log(err);
+                });
+            } else {
+              FavoriteService.post(scope.recipeId)
+                .then(function(data){
+                  scope.favText = "Favorited";
+                  scope.favorited = true;
+                },function(err){
+                  console.log(err);
+                });
+            }
+
+          }
+          scope.$watch('recipeId',function(){
+            if(scope.recipeId !== undefined){
+              FavoriteService.get(scope.recipeId)
+                .then(function(data){
+                  scope.favText = "Favorited";
+                  scope.favorited = true;
+                },function(err){
+                  console.log(err);
+                });
+            }
+          });
+        }
+    };
+}).directive('searchResults', function ($http, RecipeService) {
+    return {
+        restrict: 'A',
+        templateUrl: '/partials/recipeTitle',
+        scope: false,
+        replace: false,
+        link: function (scope, iterStartElement, attr) {
+
+          $('.search-clear').click(function () {
+            scope.searchTerm = '';
+            scope.$apply();
+          });
+
+          scope.$watch(attr.searchResults, function(){
+
+            if(scope.searchTerm != '' && !angular.isUndefined(scope.searchTerm)){
+              RecipeService.query(
+                {term: scope.searchTerm},
+                function(searchResults) {
+                  scope.recipes = searchResults;
+                  scope.selected = 0;
+                  angular.forEach(scope.recipes, function(recipe, index){
+                    recipe.selected = 'unselected';
+                    if(index == 0) recipe.selected = 'selected';
+                  });
+                },
+                function(err) {
+                  console.log(err);
+                });
+              // $http.get('/api/search/'+scope.searchTerm).success(successCallback);
             } else {
               scope.recipes = [];
             }
@@ -172,7 +198,7 @@ angular.module('cookbookApp.directives', []).
         link: function ($scope, iterStartElement, attr) {
           $scope.$watch(searchTerm,function(searchTerm){
             if(searchTerm != '' && !angular.isUndefined(searchTerm)){
-              
+
             }
           });
         }
@@ -183,6 +209,83 @@ angular.module('cookbookApp.directives', []).
       restrict: 'A',
       replace: false,
       link: function(scope, element, attrs) {
+        var editing = false;
+
+        function editable(el,on) {
+          $('#'+el).attr('contenteditable',on);
+          $('#recipeTitle').focus();
+          if(!on){
+            CKEDITOR.destroy(el);
+          } else {
+            CKEDITOR.inline(el,{
+              customConfig: '/js/lib/ckeditor/config.js'
+            });
+          }
+
+        }
+        angular.element(element).click(function(){
+          editing = (editing) ? false : true;
+
+          $(element).text((editing)? 'editing mode' : 'edit');
+
+          CKEDITOR.inline('recipeTitle',{
+            on: {
+            instanceReady: function( ev ) {
+              // Output paragraphs as <p>Text</p>.
+              this.dataProcessor.writer.setRules( 'h3', {
+                indent: false,
+                breakBeforeOpen: true,
+                breakAfterOpen: false,
+                breakBeforeClose: false,
+                breakAfterClose: true
+              });
+            }
+            }
+          });
+          CKEDITOR.inline('recipeSubtitle',{
+            on: {
+              instanceReady: function( ev ) {
+                // Output paragraphs as <p>Text</p>.
+                this.dataProcessor.writer.setRules( 'h4', {
+                  indent: false,
+                  breakBeforeOpen: true,
+                  breakAfterOpen: false,
+                  breakBeforeClose: false,
+                  breakAfterClose: true
+                });
+              }
+            }
+          });
+          CKEDITOR.inline('recipeIngredients',{
+            on: {
+          instanceReady: function( ev ) {
+              // Output paragraphs as <p>Text</p>.
+              this.dataProcessor.writer.setRules( 'p', {
+                  indent: false,
+                  breakBeforeOpen: true,
+                  breakAfterOpen: false,
+                  breakBeforeClose: false,
+                  breakAfterClose: true
+              });
+          }
+          }
+      });
+          CKEDITOR.inline('recipeDirections',{
+            on: {
+          instanceReady: function( ev ) {
+              // Output paragraphs as <p>Text</p>.
+              this.dataProcessor.writer.setRules( 'p', {
+                  indent: false,
+                  breakBeforeOpen: true,
+                  breakAfterOpen: false,
+                  breakBeforeClose: false,
+                  breakAfterClose: true
+              });
+          }
+          }
+      });
+
+        });
 
         // var stuff = angular.element('#recipeTitle').ckeditor();
 // debugger

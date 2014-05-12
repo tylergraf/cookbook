@@ -31,6 +31,14 @@ body {
   top: 0;
   width: 100%;
 }
+.header .user {
+  float: right;
+  margin-top: -20px;
+  margin-right: 20px;
+  color: #fffbde;
+  font-family: 'blanchcaps';
+  font-size: 30px;
+}
 .logo {
   color: #fffbde;
   margin: 0;
@@ -38,7 +46,7 @@ body {
   font-family: 'blanchcaps';
   font-weight: normal;
 }
-.logo a { 
+.logo a {
   color: #fffbde;
   margin: 0;
   line-height: 90px;
@@ -48,7 +56,7 @@ body {
   font-size: 80px;
   transition: opacity .1s;
 }
-.logo a:hover { 
+.logo a:hover {
   text-decoration: none;
   opacity: 0.8;
 }
@@ -163,18 +171,18 @@ body {
 
 .left-nav.searching .heading2.left {
   left: -180px;
-  
+
 }
 .left-nav.searching .heading2.right {
   width: 100%;
   text-align: right;
-  
+
 }
 .left-nav.searching .search {
   padding-right: 10px;
   right: -100px;
   width: auto;
-  
+
 }
 
 
@@ -196,6 +204,27 @@ body {
   padding-top: 10px;
 }
 
+.main .edit {
+  float: right;
+  margin-left: 10px;
+  color: #fffbde;
+  background: #b5ddc2;
+  padding: 0px 10px;
+  font-family: 'blanchcaps';
+  line-height: 1.2em;
+  font-size: 29px;
+  text-shadow: none;
+}
+
+.main #recipeTitle {
+  float: left;
+}
+.main #recipeSubtitle,
+.main #recipeIngredients,
+.main #recipeDirections {
+  float: left;
+  clear: both;
+}
 
 .left-nav .left-nav-inside {
   overflow-y: auto;
@@ -303,7 +332,7 @@ body {
   .header {
     height: 50px;
   }
-  .logo a { 
+  .logo a {
     color: #fffbde;
     margin: 0;
     line-height: 40px;

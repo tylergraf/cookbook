@@ -2,27 +2,57 @@
 
 /* Controllers */
 
-function IndexCtrl($scope, $http) {
+function IndexCtrl($scope, $rootScope, $http) {
   $http.get('/api/categories').
     success(function(data, status, headers, config) {
       $scope.categories = data;
     });
 }
 
-function CategoryCtrl($scope, $http, $routeParams) {
+function LoginCtrl($scope, $rootScope, $http) {
+  window.location.reload();
+  // $scope.login = function(email, password){
+  //   $http.post('/api/login', {user: {email: email, password: password}}).
+  //     success(function(data, status, headers, config) {
+  //
+  //     });
+  // }
+}
+
+function CreateAccountCtrl($scope, $rootScope, $http) {
+  $scope.createAccount = function(email, password){
+    $http.post('/api/user/new', {user: {email: email, password: password}}).
+      success(function(data, status, headers, config) {
+
+      });
+  }
+}
+
+function CategoryCtrl($scope, $rootScope, $http, $routeParams) {
   $http.get('/api/subcategories/'+$routeParams.id).
     success(function(data, status, headers, config) {
       $scope.subcategories = data;
     });
 }
-function SubcategoryCtrl($scope, $http, $routeParams) {
-  
+function SubcategoryCtrl($scope, $rootScope, $http, $routeParams) {
+
   $http.get('/api/recipes/'+$routeParams.id).
     success(function(data, status, headers, config) {
       $scope.recipes = data;
     });
 }
-function RecipeCtrl($scope, $http, $routeParams, localStorageService) {
+function FavoritesCtrl($scope, $rootScope, $http, FavoriteService) {
+
+  FavoriteService.getAll()
+    .then(function(data){
+      console.log(data.favorites);
+      $scope.favorites = data.favorites;
+    },
+    function(err){
+      console.log(err);
+    });
+}
+function RecipeCtrl($scope, $rootScope, $http, $routeParams) {
   // var recipe = localStorageService.get($routeParams.id);
   // if(recipe){
   //   $scope.recipe = JSON.parse(recipe);
@@ -39,7 +69,7 @@ function RecipeCtrl($scope, $http, $routeParams, localStorageService) {
 
 }
 
-function AddPostCtrl($scope, $http, $location) {
+function AddPostCtrl($scope, $rootScope, $http, $location) {
   $scope.form = {};
   $scope.submitPost = function () {
     $http.post('/api/post', $scope.form).
@@ -49,14 +79,14 @@ function AddPostCtrl($scope, $http, $location) {
   };
 }
 
-function ReadPostCtrl($scope, $http, $routeParams) {
+function ReadPostCtrl($scope, $rootScope, $http, $routeParams) {
   $http.get('/api/post/' + $routeParams.id).
     success(function(data) {
       $scope.post = data.post;
     });
 }
 
-function EditPostCtrl($scope, $http, $location, $routeParams) {
+function EditPostCtrl($scope, $rootScope, $http, $location, $routeParams) {
   $scope.form = {};
   $http.get('/api/post/' + $routeParams.id).
     success(function(data) {
@@ -71,7 +101,7 @@ function EditPostCtrl($scope, $http, $location, $routeParams) {
   };
 }
 
-function DeletePostCtrl($scope, $http, $location, $routeParams) {
+function DeletePostCtrl($scope, $rootScope, $http, $location, $routeParams) {
   $http.get('/api/post/' + $routeParams.id).
     success(function(data) {
       $scope.post = data.post;
@@ -89,11 +119,11 @@ function DeletePostCtrl($scope, $http, $location, $routeParams) {
   };
 }
 
-function LeftNav($scope, $http, $location, $routeParams) {
-  
+function LeftNav($scope, $rootScope, $http, $location, $routeParams) {
 
 
-  
+
+
 
   var search = angular.element('.search')
 
@@ -112,11 +142,11 @@ function LeftNav($scope, $http, $location, $routeParams) {
   function searchTransition() {
     angular.element('.left-nav').toggleClass('searching');
     angular.element('.search-form').toggleClass('hide');
-    
+
 
   }
 }
-function theController($scope, $http) {
+function theController($scope, $rootScope, $http) {
   $scope.recipes = [
   {
     "_id": "516207e7f51d344e4b6e7bbf",

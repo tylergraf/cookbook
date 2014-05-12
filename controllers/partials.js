@@ -10,7 +10,8 @@ module.exports = function(app) {
 
   app.get('/partials/:name', function(req, res, next) {
     var name = req.params.name;
-    res.render('partials/' + name,{layout:false});
+    // res.etagify();
+    res.render('partials/' + name,{layout:false, user: req.user});
   });
 
   // app.get('/api/posts', api.posts);
@@ -23,4 +24,3 @@ module.exports = function(app) {
   // redirect all others to the index (HTML5 history)
   // app.get('*', routes.index);
 };
-

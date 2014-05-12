@@ -7,6 +7,7 @@ var express = require('express')
 
   , fs = require('fs')
   , http = require('http')
+  , etagify = require('etagify')
   , path = require('path')
   , ejs = require('ejs')
   , expressLayouts = require('express-ejs-layouts')
@@ -35,6 +36,7 @@ app.configure(function(){
   app.set('view engine', 'ejs');
   app.set('view options',{layout: 'layout'});
   app.use(express.favicon());
+  // app.use(etagify);
   app.use(expressLayouts);
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
@@ -52,8 +54,16 @@ app.configure(function(){
   );
   app.use(passport.initialize());
   app.use(passport.session());
+
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'assets')));
+  app.use(function(req, res, next) {
+    if (req.user) {
+      app.locals.user = user;
+    }
+    next();
+  });
+  app.use(clientErrorHandler);
 
 });
 
@@ -67,13 +77,38 @@ app.configure('production', function(){
 });
 
 
+function loadControllers(folder) {
+  folder.forEach(function (file) {
+    if (fs.lstatSync(__dirname + '/controllers/' + file).isDirectory()) {
+      var insideFiles = fs.readdirSync(__dirname + '/controllers/' + file);
+      insideFiles.forEach(function(insideFile) {
+        require(__dirname + '/controllers/' + file + '/' + insideFile)(app);
+      });
+    } else {
+      require(controllers_path+'/'+file)(app)
+    }
+  });
+}
+// LOAD ROUTES AND CONTROLLERS
+var controllers_path = __dirname + '/controllers',
+    controller_files = fs.readdirSync(controllers_path);
+    loadControllers(controller_files);
 
-var controllers_path = __dirname + '/controllers'
-  , controller_files = fs.readdirSync(controllers_path)
-controller_files.forEach(function (file) {
-  require(controllers_path+'/'+file)(app)
-})
+// var controllers_path = __dirname + '/controllers'
+//   , controller_files = fs.readdirSync(controllers_path)
+// controller_files.forEach(function (file) {
+//   require(controllers_path+'/'+file)(app)
+// })
+function clientErrorHandler(err, req, res, next) {
+  if (req.xhr) {
+    var code = err.code || 500,
+        message = err.message || 'Something blew up.';
 
+    res.json(code, {code: code, message: message });
+  } else {
+    next(err);
+  }
+}
 
 // Routes
 

@@ -3,15 +3,16 @@
   'icons.css'
   ],
   js: [
-    //'lib/ckeditor-3/ckeditor.js',
+    'fb_redirect.js',
+    'lib/ckeditor/ckeditor.js',
     //'lib/ckeditor-3/adapters/jquery.js',
-    'lib/angular/angular.js',
+    'lib/angular-1.1.2/angular.js',
+    'lib/angular-1.1.2/angular-resource.js',
     'app.js',
     'services.js',
     'controllers.js',
     'filters.js',
-    'directives.js',
-    'lib/localStorageModule.js'
+    'directives.js'
   ]
 } %>
 <div class="page-wrapper">
@@ -23,7 +24,7 @@
         <input type="text" placeholder="So Many Searches..." ng-model="searchTerm" class="search-term">
       </form>
     </div>
-    <div class="left-nav-inside" search-results="searchTerm" select-recipe >
+    <div class="left-nav-inside" search-results="searchTerm" select-recipe>
       <ul browse></ul>
     </div>
   </div>
@@ -31,4 +32,3 @@
     <div ng-view></div>
   </div>
 </div>
-

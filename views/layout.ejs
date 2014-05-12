@@ -15,9 +15,15 @@
     <% } %>
   <% } %>
 </head>
-<body ng-app="cookbookApp">
+<body ng-app="cookbookApp" ng-init="user = <%= JSON.stringify(user) %>">
+
   <header class="header">
     <h1 class="logo"><a href="/">Gretchen&#39;s Cookbook</a></h1>
+    <% if(typeof user !== 'undefined'){ %>
+    <span class="user"><%= user.name %></span>
+    <% } else { %>
+    <a class="user" href="/auth/facebook">Sign in with Facebook</a>
+    <% } %>
   </header>
 <%- body %>
 

@@ -11,7 +11,6 @@
  * @name ngCookies
  */
 
-
 angular.module('ngCookies', ['ng']).
   /**
    * @ngdoc object

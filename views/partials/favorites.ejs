@@ -1,0 +1,4 @@
+<p>You have {{favorites.length}} favorites</p>
+<div ng-repeat='favorite in favorites' class='subcategories'>
+  <h3 class="heading2"><a href="/recipe/{{favorite._recipe._id}}" ng-bind-html-unsafe="favorite._recipe.title"></a></h3>
+</div>
