@@ -89,7 +89,7 @@ angular.module('cookbookApp.directives', []).
           });
         }
     };
-}).directive('searchResults', function ($http, RecipeService) {
+}).directive('searchResults', function ($http, RecipesService) {
     return {
         restrict: 'A',
         templateUrl: '/partials/recipeTitle',
@@ -105,7 +105,7 @@ angular.module('cookbookApp.directives', []).
           scope.$watch(attr.searchResults, function(){
 
             if(scope.searchTerm != '' && !angular.isUndefined(scope.searchTerm)){
-              RecipeService.query(
+              RecipesService.query(
                 {term: scope.searchTerm},
                 function(searchResults) {
                   scope.recipes = searchResults;

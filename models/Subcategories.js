@@ -1,12 +1,14 @@
-var mongoose = require('mongoose')
-    ,Schema = mongoose.Schema;
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 
 var subcategorySchema = new Schema({
-    created: Date,
-    updated: Date,
+    created: {type: Date, default: Date.now},
+    updated: {type: Date, default: Date.now},
     name: String,
-    category_id: String,
-    _id: String
+    _category: {type: ObjectId, ref: 'Categories'},
+    slug: String,
+    id: ObjectId
 });
 
 

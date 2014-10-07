@@ -6,6 +6,7 @@ var userSchema = new Schema({
     id: ObjectId,
     facebookId: String,
     name: String,
+    admin: Boolean,
     avatar: String,
     email: String,
     password: String

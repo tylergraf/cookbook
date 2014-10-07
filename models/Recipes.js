@@ -10,7 +10,9 @@ var recipesSchema = new Schema({
     ingredients: String,
     directions: String,
     subcategory_id: String,
-    _id: ObjectId
+    _subcategory:  {type: ObjectId, ref: 'Subcategories'},
+    id: ObjectId
+    // id: ObjectId
 });
 
 module.exports = mongoose.model('Recipes', recipesSchema);

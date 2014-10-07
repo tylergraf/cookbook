@@ -3,19 +3,18 @@
  * Module dependencies.
  */
 
-var express = require('express')
-
-  , fs = require('fs')
-  , http = require('http')
-  , etagify = require('etagify')
-  , path = require('path')
-  , ejs = require('ejs')
-  , expressLayouts = require('express-ejs-layouts')
-  , passport = require('passport')
-  , util = require('util')
-  , LocalStrategy = require('passport-local').Strategy
-  , mongoose = require('mongoose')
-  , MongoStore = require('connect-mongo')(express);
+var express = require('express'),
+    fs = require('fs'),
+    http = require('http'),
+    etagify = require('etagify'),
+    path = require('path'),
+    ejs = require('ejs'),
+    expressLayouts = require('express-ejs-layouts'),
+    passport = require('passport'),
+    util = require('util'),
+    LocalStrategy = require('passport-local').Strategy,
+    mongoose = require('mongoose'),
+    MongoStore = require('connect-mongo')(express);
 
 
 // DB CONNECTION
@@ -58,8 +57,9 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'assets')));
   app.use(function(req, res, next) {
+    console.log(req.user);
     if (req.user) {
-      app.locals.user = user;
+      app.locals.user = req.user;
     }
     next();
   });
@@ -85,7 +85,7 @@ function loadControllers(folder) {
         require(__dirname + '/controllers/' + file + '/' + insideFile)(app);
       });
     } else {
-      require(controllers_path+'/'+file)(app)
+      require(controllers_path+'/'+file)(app);
     }
   });
 }

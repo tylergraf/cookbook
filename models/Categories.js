@@ -1,11 +1,13 @@
-var mongoose = require('mongoose')
-    ,Schema = mongoose.Schema;
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 
 var categorySchema = new Schema({
-    created: Date,
-    updated: Date,
+    created: {type: Date, default: Date.now},
+    updated: {type: Date, default: Date.now},
     name: String,
-    _id: String
+    slug: String,
+    id: ObjectId
 });
 
 

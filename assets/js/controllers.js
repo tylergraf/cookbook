@@ -1,12 +1,33 @@
-'use strict';
+
 
 /* Controllers */
 
-function IndexCtrl($scope, $rootScope, $http) {
-  $http.get('/api/categories').
-    success(function(data, status, headers, config) {
-      $scope.categories = data;
+function IndexCtrl($scope, $rootScope, $http, CategoryService) {
+  window.io = $scope;
+  $rootScope.taxonomy = {};
+  $scope.addCategory = function(category){
+    CategoryService
+      .add(category)
+      .then(function(data){
+        $scope.categories.push(data.category);
+      });
+    $scope.category = '';
+  };
+
+  $scope.deleteCategory = function(categoryId, index){
+    CategoryService
+      .delete(categoryId)
+      .then(function(data){
+        $scope.categories.splice(index, 1);
+      });
+  };
+
+  CategoryService
+    .getAll()
+    .then(function(data){
+      $scope.categories = data.categories;
     });
+
 }
 
 function LoginCtrl($scope, $rootScope, $http) {
@@ -25,21 +46,132 @@ function CreateAccountCtrl($scope, $rootScope, $http) {
       success(function(data, status, headers, config) {
 
       });
-  }
+  };
 }
 
-function CategoryCtrl($scope, $rootScope, $http, $routeParams) {
-  $http.get('/api/subcategories/'+$routeParams.id).
-    success(function(data, status, headers, config) {
-      $scope.subcategories = data;
-    });
-}
-function SubcategoryCtrl($scope, $rootScope, $http, $routeParams) {
+function SubcategoryCtrl($scope, $rootScope, SubcategoryService, CategoryService, $routeParams) {
+  $scope.edit = {};
+  $rootScope.taxonomy = {};
 
-  $http.get('/api/recipes/'+$routeParams.id).
-    success(function(data, status, headers, config) {
-      $scope.recipes = data;
+  $scope.move = false;
+  $scope.categoryId = $routeParams.id;
+
+  window.io = $scope;
+  $scope.addSubcategory = function(subcategory){
+    SubcategoryService
+      .add(subcategory, $scope.categoryId)
+      .then(function(data){
+        $scope.subcategories.push(data.subcategory);
+      });
+    $scope.subcategory = '';
+  };
+
+  $scope.deleteSubcategory = function(subcategoryId, index){
+    SubcategoryService
+      .delete(subcategoryId)
+      .then(function(data){
+        $scope.subcategories.splice(index, 1);
+      });
+  };
+
+  $scope.moveTo = function(subcategoryList){
+    var list = [];
+
+    for(var x in subcategoryList){
+      if(subcategoryList[x]){
+        list.push(x);
+      }
+    }
+
+    SubcategoryService
+      .move(list, $scope.moveToCategory._id)
+      .then(function(data){
+        angular.forEach($scope.subcategories, function(s, i){
+          for(var x in subcategoryList){
+            if(subcategoryList[x] && s._id === x){
+              $scope.subcategories.splice(i, 1);
+            }
+          }
+        });
+      });
+  };
+
+  SubcategoryService
+    .getAll($scope.categoryId)
+    .then(function(data){
+      $scope.subcategories = data.subcategories;
+      $rootScope.taxonomy.category = data.category;
     });
+
+  CategoryService
+    .getAll()
+    .then(function(data){
+      $scope.categories = data.categories;
+    });
+
+}
+
+function RecipesCtrl($scope, $rootScope, $routeParams, RecipeService, SubcategoryService, CategoryService) {
+  // $rootScope.taxonomy = {};
+
+  var categoryId = $routeParams.categoryId,
+      subcategoryId = $routeParams.id;
+
+  $scope.edit = {};
+  $scope.move = false;
+
+  RecipeService
+    .getAll(subcategoryId)
+    .then(function(data){
+      $scope.recipes = data.recipes;
+      $rootScope.taxonomy.subcategory = data.subcategory;
+    });
+
+  CategoryService
+    .getAll()
+    .then(function(data){
+      $scope.categories = data.categories;
+
+      angular.forEach(data.categories, function(c, i){
+        if(c._id === categoryId){
+          $rootScope.taxonomy = {category: c.name};
+        }
+      });
+    });
+
+  $scope.moveTo = function(){
+    var list = [],
+        recipeList = $scope.edit;
+
+    for(var x in recipeList){
+      if(recipeList[x]){
+        list.push(x);
+      }
+    }
+    RecipeService
+      .move(list, $scope.moveToSubcategory._id)
+      .then(function(data){
+        angular.forEach($scope.recipes, function(s, i){
+          for(var x in recipeList){
+            if(recipeList[x] && s._id === x){
+              $scope.recipes.splice(i, 1);
+            }
+          }
+        });
+      });
+  };
+
+  $scope.$watch('moveToCategory', function(value){
+
+    if(value){
+      SubcategoryService
+        .getAll(value._id)
+        .then(function(data){
+          $scope.subcategories = data.subcategories;
+        });
+    }
+  });
+
 }
 function FavoritesCtrl($scope, $rootScope, $http, FavoriteService) {
 
@@ -52,19 +184,31 @@ function FavoritesCtrl($scope, $rootScope, $http, FavoriteService) {
       console.log(err);
     });
 }
-function RecipeCtrl($scope, $rootScope, $http, $routeParams) {
+function RecipeCtrl($scope, $rootScope, RecipeService, CategoryService, $routeParams) {
+  var recipeId = $routeParams.id;
+
+  RecipeService
+    .get(recipeId)
+    .then(function(data){
+      $scope.recipe = data.recipe;
+      $rootScope.taxonomy.subcategory = data.subcategory;
+      return CategoryService.get(data.subcategory._category)
+    })
+    .then(function(data){
+      $rootScope.taxonomy.category = data.category;
+    })
   // var recipe = localStorageService.get($routeParams.id);
   // if(recipe){
   //   $scope.recipe = JSON.parse(recipe);
   // } else {
-    $http({
-      method: 'GET',
-      url: '/api/recipe/'+$routeParams.id,
-      cache: false})
-      .success(function(data, status, headers, config) {
-        // localStorageService.add(data._id,JSON.stringify(data));
-        $scope.recipe = data;
-      });
+    // $http({
+    //   method: 'GET',
+    //   url: '/api/recipe/'+$routeParams.id,
+    //   cache: false})
+    //   .success(function(data, status, headers, config) {
+    //     // localStorageService.add(data._id,JSON.stringify(data));
+    //     $scope.recipe = data.recipe;
+    //   });
   // }
 
 }

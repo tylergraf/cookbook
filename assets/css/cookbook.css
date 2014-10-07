@@ -18,6 +18,7 @@ body {
 body {
   background: #fffdf0;
   font-family: 'adelle';
+  font-family: 'Slabo 13px', serif;
   font-size: 18px;
   color: #8ca893;
   margin-bottom: -100px;
@@ -141,6 +142,7 @@ body {
 }
 .heading3 {
   font-family: 'adelle';
+  font-family: 'Slabo 13px', serif;
   font-weight: normal;
   margin: 0;
 }
@@ -185,6 +187,10 @@ body {
 
 }
 
+.heading2 .delete-subcategory,
+.heading2 .delete-category {
+  font-size: 25px;
+}
 
 .search-form .search-term:focus {
   box-shadow: none;
