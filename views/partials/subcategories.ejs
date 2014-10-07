@@ -1,4 +1,22 @@
 <!-- <p>There are {{subcategories.length}} subcategories</p> -->
+<form class="form" name="moveToForm" ng-submit="moveTo(edit)" ng-show="editMode">
+  <a href="#" class="btn" ng-click="move = !move" ng-disabled="!Object.keys(edit).length">Move To</a>
+  <select ng-model="moveToCategory"
+    ng-options="category.name for category in categories" ng-show="move">
+    <option value="">Select a Category</option>
+  </select>
+  <button class="btn" type="submit" ng-disabled="!moveToCategory" ng-show="move">Move</button>
+</form>
 <div ng-repeat='subcategory in subcategories' class='subcategories'>
-  <h3 class="heading2"><a href="/recipes/{{subcategory._id}}">{{subcategory.name}}</a></h3> 
+  <h3 class="heading2">
+    <input type="checkbox" ng-model="edit[subcategory._id]" ng-show="editMode">
+    <a href="/recipes/{{subcategory._id}}">{{subcategory.name}}</a>
+    <a href="#" class="delete-subcategory" ng-show="editMode" ng-click="deleteSubcategory(subcategory._id, $index)"><i class="icon cook-icon-x-altx-alt"></i></a>
+  </h3>
 </div>
+
+
+<form name="subcategoryForm" ng-submit="addSubcategory(subcategory)" ng-show="editMode">
+  <input type="text" name="subcategory" ng-model="subcategory" placeholder="Subcategory Name">
+  <button class="btn" ng-disabled="!subcategory">Add Subcategory</button>
+</form>

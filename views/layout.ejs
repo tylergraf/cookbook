@@ -8,6 +8,7 @@
   <link rel="icon" href="/css/images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="/css/lib/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/css/lib/bootstrap-responsive.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Slabo+13px' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="/css/cookbook.css">
   <% if(typeof assets != "undefined" && assets.css) { %>
     <% for(var filename in assets.css) { %>
@@ -19,10 +20,15 @@
 
   <header class="header">
     <h1 class="logo"><a href="/">Gretchen&#39;s Cookbook</a></h1>
+
     <% if(typeof user !== 'undefined'){ %>
     <span class="user"><%= user.name %></span>
     <% } else { %>
     <a class="user" href="/auth/facebook">Sign in with Facebook</a>
+    <% } %>
+
+    <% if(user && user.admin){ %>
+    <a href="#" class="edit-mode-trigger" ng-click="toggleEditMode()">Edit Mode</a>
     <% } %>
   </header>
 <%- body %>

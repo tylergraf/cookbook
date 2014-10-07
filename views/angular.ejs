@@ -29,6 +29,9 @@
     </div>
   </div>
   <div class="main">
+    <nav class="taxonomy">
+      <a href="/category/{{taxonomy.category._id}}" class="category-tax">{{taxonomy.category.name}}</a> <span ng-show="taxonomy.subcategory">|</span> <a href="/recipes/{{taxonomy.subcategory._id}}" class="subcategory-tax">{{taxonomy.subcategory.name}}</a>
+    </nav>
     <div ng-view></div>
   </div>
 </div>

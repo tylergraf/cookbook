@@ -1,0 +1,12 @@
+<!-- <p>There are {{categories.length}} categories</p> -->
+<div ng-repeat='category in categories'>
+  <h3 class="heading2">
+    <a href="/category/{{category._id}}">{{category.name}}</a>
+    <a href="#" class="delete-category" ng-show="editMode" ng-click="deleteCategory(category._id, $index)"><i class="icon cook-icon-x-altx-alt search-clear"></i></a>
+  </h3>
+</div>
+
+<form name="categoryForm" ng-submit="addCategory(category)" ng-show="editMode">
+  <input type="text" name="category" ng-model="category">
+  <button class="btn" ng-disabled="!category">Add Category</button>
+</form>
