@@ -1,56 +1,58 @@
+(function(){
+  'use strict';
 
+  // Declare app level module which depends on filters, and services
+  var app = angular.module('cookbookApp', ['ngRoute','cookbookApp.filters', 'cookbookApp.controllers', 'cookbookApp.services', 'cookbookApp.directives']);
 
-// Declare app level module which depends on filters, and services
-angular.module('cookbookApp', ['cookbookApp.filters', 'cookbookApp.services', 'cookbookApp.directives']).
-  config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+  app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
       when('/', {
         templateUrl: '/partials/categories',
-        controller: IndexCtrl
+        controller: 'IndexCtrl'
       }).
       when('/auth/facebook', {
         templateUrl: '/partials/categories',
-        controller: LoginCtrl
+        controller: 'LoginCtrl'
       }).
       when('/logout', {
         templateUrl: '/partials/categories',
-        controller: LoginCtrl
+        controller: 'LoginCtrl'
       }).
       when('/create-account', {
         templateUrl: '/partials/create-account',
-        controller: CreateAccountCtrl
+        controller: 'CreateAccountCtrl'
       }).
       when('/category/:id', {
         templateUrl: '/partials/subcategories',
-        controller: SubcategoryCtrl
+        controller: 'SubcategoryCtrl'
       }).
       when('/favorites', {
         templateUrl: '/partials/favorites',
-        controller: FavoritesCtrl
+        controller: 'FavoritesCtrl'
       }).
       when('/recipes/:id', {
         templateUrl: '/partials/recipes',
-        controller: RecipesCtrl
+        controller: 'RecipesCtrl'
       }).
       when('/recipe/:id', {
         templateUrl: '/partials/recipe',
-        controller: RecipeCtrl
+        controller: 'RecipeCtrl'
       }).
       when('/addPost', {
         templateUrl: '/partials/addPost',
-        controller: AddPostCtrl
+        controller: 'AddPostCtrl'
       }).
       when('/readPost/:id', {
         templateUrl: '/partials/readPost',
-        controller: ReadPostCtrl
+        controller: 'ReadPostCtrl'
       }).
       when('/editPost/:id', {
         templateUrl: '/partials/editPost',
-        controller: EditPostCtrl
+        controller: 'EditPostCtrl'
       }).
       when('/deletePost/:id', {
         templateUrl: '/partials/deletePost',
-        controller: DeletePostCtrl
+        controller: 'DeletePostCtrl'
       }).
       otherwise({
         redirectTo: '/'
@@ -60,50 +62,51 @@ angular.module('cookbookApp', ['cookbookApp.filters', 'cookbookApp.services', 'c
   .run(['$rootScope',function($rootScope){
     $rootScope.taxonomy = {};
     $rootScope.editMode = false;
-    
+
     $rootScope.toggleEditMode = function(){
       $rootScope.editMode = !$rootScope.editMode;
     };
   }]);
 
-  // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
-if (!Object.keys) {
-  Object.keys = (function() {
-    'use strict';
-    var hasOwnProperty = Object.prototype.hasOwnProperty,
-        hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
-        dontEnums = [
-          'toString',
-          'toLocaleString',
-          'valueOf',
-          'hasOwnProperty',
-          'isPrototypeOf',
-          'propertyIsEnumerable',
-          'constructor'
-        ],
-        dontEnumsLength = dontEnums.length;
+    // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+  if (!Object.keys) {
+    Object.keys = (function() {
+      'use strict';
+      var hasOwnProperty = Object.prototype.hasOwnProperty,
+          hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
+          dontEnums = [
+            'toString',
+            'toLocaleString',
+            'valueOf',
+            'hasOwnProperty',
+            'isPrototypeOf',
+            'propertyIsEnumerable',
+            'constructor'
+          ],
+          dontEnumsLength = dontEnums.length;
 
-    return function(obj) {
-      if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
-        throw new TypeError('Object.keys called on non-object');
-      }
-
-      var result = [], prop, i;
-
-      for (prop in obj) {
-        if (hasOwnProperty.call(obj, prop)) {
-          result.push(prop);
+      return function(obj) {
+        if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
+          throw new TypeError('Object.keys called on non-object');
         }
-      }
 
-      if (hasDontEnumBug) {
-        for (i = 0; i < dontEnumsLength; i++) {
-          if (hasOwnProperty.call(obj, dontEnums[i])) {
-            result.push(dontEnums[i]);
+        var result = [], prop, i;
+
+        for (prop in obj) {
+          if (hasOwnProperty.call(obj, prop)) {
+            result.push(prop);
           }
         }
-      }
-      return result;
-    };
-  }());
-}
+
+        if (hasDontEnumBug) {
+          for (i = 0; i < dontEnumsLength; i++) {
+            if (hasOwnProperty.call(obj, dontEnums[i])) {
+              result.push(dontEnums[i]);
+            }
+          }
+        }
+        return result;
+      };
+    }());
+  }
+})();
