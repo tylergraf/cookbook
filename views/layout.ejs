@@ -34,7 +34,12 @@
 <%- body %>
 
 
-  <script src="/js/lib/jquery-1.9.0.min.js"></script>
+  <script src="/build/components.js"></script>
+  <% if(process.env.NODE_ENV === 'development'){ %>
+  <script src="/build/build.js"></script>
+  <% }else { %>
+  <script src="/build/build.min.js"></script>
+  <% } %>
 
   <% if(typeof assets != "undefined" && assets.js) { %>
     <% for(var filename in assets.js) { %>

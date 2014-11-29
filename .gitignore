@@ -6,6 +6,9 @@ lib-cov
 *.out
 *.pid
 *.gz
+/assets/build
+/assets/components
+/bower_components
 /node_modules
 .env
 .DS_STORE
