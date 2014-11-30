@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "gretchens-cookbook",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -30,5 +30,8 @@
   },
   "scripts": {
     "postinstall": "gulp prod"
-  }
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
 }
