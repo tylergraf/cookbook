@@ -21,9 +21,7 @@
     "wkhtmltopdf": "~0.1.4",
     "pdfkit": "~0.6.2",
     "pdfkitjs": "0.0.5",
-    "moment": "~2.8.3"
-  },
-  "devDependencies": {
+    "moment": "~2.8.3",
     "gulp": "~3.8.10",
     "gulp-bower": "0.0.7",
     "gulp-rename": "~1.2.0",
