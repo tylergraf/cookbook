@@ -30,5 +30,7 @@
     "gulp-concat": "~2.4.2",
     "gulp-uglify": "~1.0.1"
   },
-  "postinstall": "gulp prod"
+  "scripts": {
+    "postinstall": "gulp prod"
+  }
 }
