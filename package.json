@@ -29,7 +29,7 @@
     "gulp-uglify": "~1.0.1"
   },
   "scripts": {
-    "postinstall": "gulp prod"
+    "postinstall": "gulp bower && gulp prod"
   },
   "engines": {
     "node": "0.10.x"
