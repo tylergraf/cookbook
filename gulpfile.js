@@ -54,5 +54,5 @@ gulp.task('watch', function() {
   // gulp.watch('assets/css/**/*.css', ['styles']);
 });
 
-gulp.task('default', ['scripts','watch']);
-gulp.task('prod', ['bowerScripts','scripts']);
+gulp.task('default', ['bower','scripts','watch']);
+gulp.task('prod', ['bower','bowerScripts','scripts']);

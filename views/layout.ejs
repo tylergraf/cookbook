@@ -34,10 +34,11 @@
 <%- body %>
 
 
-  <script src="/build/components.js"></script>
   <% if(process.env.NODE_ENV === 'development'){ %>
+  <script src="/build/components.js"></script>
   <script src="/build/build.js"></script>
   <% }else { %>
+  <script src="/build/components.min.js"></script>
   <script src="/build/build.min.js"></script>
   <% } %>
 
