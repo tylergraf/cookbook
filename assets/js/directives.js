@@ -91,10 +91,10 @@
             });
           }
       };
-  }).directive('searchResults', function ($http, RecipesService) {
+  }).directive('searchResults', function ($http, $sce, RecipesService) {
       return {
           restrict: 'A',
-          templateUrl: '/partials/recipeTitle',
+          templateUrl: '/partials/searchResults',
           scope: false,
           replace: false,
           link: function (scope, iterStartElement, attr) {
@@ -115,6 +115,8 @@
                     angular.forEach(scope.recipes, function(recipe, index){
                       recipe.selected = 'unselected';
                       if(index == 0) recipe.selected = 'selected';
+                      recipe.safeTitle = $sce.trustAsHtml(recipe.title);
+                      recipe.safeSubtitle = $sce.trustAsHtml(recipe.subtitle);
                     });
                   },
                   function(err) {

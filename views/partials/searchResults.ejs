@@ -1,8 +1,8 @@
 <ul class="recipe-list">
   <li ng-repeat="recipe in recipes" class="recipe-list-item {{recipe.selected}}">
     <a href="/recipe/{{recipe._id}}">
-      <span class="title"ng-bind-html-unsafe="recipe.title"></span>
-      <span class="subtitle"ng-bind-html-unsafe="recipe.subtitle"></span>
+      <span class="title" ng-bind-html="recipe.safeTitle"></span>
+      <span class="subtitle" ng-bind-html="recipe.safeSubtitle"></span>
     </a>
   </li>
 </ul>
