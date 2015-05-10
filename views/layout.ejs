@@ -5,6 +5,9 @@
   <meta name="description" content="Cookbook">
   <meta http-equiv="content-type" content="text/html;charset=UTF-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+  <base href="/">
+  
   <link rel="icon" href="/css/images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="/css/lib/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/css/lib/bootstrap-responsive.min.css">
@@ -15,6 +18,7 @@
       <link rel="stylesheet" type="text/css" href="/css/<%= assets.css[filename] %>">
     <% } %>
   <% } %>
+
 </head>
 <body ng-app="cookbookApp" ng-init="user = <%= JSON.stringify(user) %>">
 
