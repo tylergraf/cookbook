@@ -1,0 +1,32 @@
+<div style=" margin-top: 150px; overflow: scroll;">
+  <% recipes.forEach(function(r,i){ %>
+    <pre>
+      <%= JSON.stringify(r) %>
+    </pre>
+    <h2><%- r.recipe.title %></h2>
+    <div><%- r.recipe.title %></div>
+    <div>
+      <%- r.ingredients %>
+    </div>
+    <div ng-data="ingredients='### asdf
+    * asdf
+    * asdf
+    * asdf
+    * asdf
+    * asdf
+    * asdf'">
+      <%- r.ingredients %>
+    </div>
+    <div btf-markdown="ingredients">
+      ### asdf
+      * asdf
+      * asdf
+      * asdf
+      * asdf
+      * asdf
+      * asdf
+    </div>
+    <br><br><br><br><br>
+  <% })%>
+
+</div>

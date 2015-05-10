@@ -2,8 +2,9 @@
   "name": "cookbook",
   "dependencies": {
     "jquery": "~2.1.1",
-    "angular": "1.2.27",
+    "angular": "~1.3.6",
     "angular-route": "1.2.27",
-    "angular-resource": "1.2.27"
+    "angular-resource": "1.2.27",
+    "angular-markdown-directive": "~0.3.1"
   }
 }

@@ -3,12 +3,10 @@
 var gulp = require('gulp');
 
 // plugins
-  var bower = require('gulp-bower'),
-      concat = require('gulp-concat'),
-      uglify = require('gulp-uglify'),
-      rename = require('gulp-rename');
-
-
+var bower = require('gulp-bower'),
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
+    rename = require('gulp-rename');
 
 
 gulp.task('bower', function() {
@@ -40,7 +38,10 @@ gulp.task('bowerScripts', function() {
     'assets/components/jquery/dist/jquery.min.js',
     'assets/components/angular/angular.min.js',
     'assets/components/angular-route/angular-route.min.js',
-    'assets/components/angular-resource/angular-resource.min.js'
+    'assets/components/angular-resource/angular-resource.min.js',
+    'assets/components/showdown/src/showdown.js',
+    'assets/components/angular-markdown-directive/markdown.js',
+    'assets/components/angular-sanitize/angular-sanitize.js'
   ])
   .pipe(concat('components.js'))
   .pipe(gulp.dest('assets/build'))
@@ -52,6 +53,11 @@ gulp.task('bowerScripts', function() {
 gulp.task('watch', function() {
   gulp.watch('assets/js/**/*.js', ['scripts']);
   // gulp.watch('assets/css/**/*.css', ['styles']);
+});
+
+gulp.task('md', function() {
+
+
 });
 
 gulp.task('default', ['bower','scripts','watch']);

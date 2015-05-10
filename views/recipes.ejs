@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <title>Gretchen's Cookbook</title>
+  <meta name="description" content="Cookbook">
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="icon" href="/css/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="/css/lib/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/lib/bootstrap-responsive.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Slabo+13px' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="/css/cookbook.css">
+  <% if(typeof assets != "undefined" && assets.css) { %>
+    <% for(var filename in assets.css) { %>
+      <link rel="stylesheet" type="text/css" href="/css/<%= assets.css[filename] %>">
+    <% } %>
+  <% } %>
+</head>
+<body ng-app="cookbookApp" ng-init="user = <%= JSON.stringify(user) %>">
+
+  <header class="header">
+    <h1 class="logo"><a href="/">Gretchen&#39;s Cookbook</a></h1>
+
+    <% if(typeof user !== 'undefined'){ %>
+    <span class="user"><%= user.name %></span>
+    <% } else { %>
+    <a class="user" href="/auth/facebook">Sign in with Facebook</a>
+    <% } %>
+
+    <% if(user && user.admin){ %>
+    <a href="#" class="edit-mode-trigger" ng-click="toggleEditMode()">Edit Mode</a>
+    <% } %>
+  </header>
+<%- body %>
+
+
+  <% if(process.env.NODE_ENV === 'development'){ %>
+  <script src="/build/components.js"></script>
+  <script src="/build/build.js"></script>
+  <% }else { %>
+  <script src="/build/components.min.js"></script>
+  <script src="/build/build.js"></script>
+  <% } %>
+
+  <% if(typeof assets != "undefined" && assets.js) { %>
+    <% for(var filename in assets.js) { %>
+      <script src="/js/<%= assets.js[filename] %>"></script>
+    <% } %>
+  <% } %>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-50584064-1', 'gretchenscookbook.com');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

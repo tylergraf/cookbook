@@ -121,6 +121,7 @@
     $scope.edit = {};
     $scope.move = false;
 
+
     RecipeService
       .getAll(subcategoryId)
       .then(function(data){
@@ -188,6 +189,7 @@
 
   ngModule.controller("RecipeCtrl", function($scope, $rootScope, RecipeService, CategoryService, ViewService, $routeParams) {
     var recipeId = $routeParams.id;
+
 
     RecipeService
       .get(recipeId)

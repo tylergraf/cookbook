@@ -5,8 +5,13 @@
   <!-- {{user}} -->
   <span add-favorite recipe-id="recipe._id" ng-click="addFavorite()"></span>
   <a class="edit btn" ng-show="user !== undefined" href="/favorites">View Favorites</a>
-  <h3 id="recipeTitle" class="heading2 clearfix" ng-bind-html-unsafe="recipe.title"></h3>
-  <h4 id="recipeSubtitle" class="clearfix" ng-bind-html-unsafe="recipe.subtitle"></h4>
-  <p id="recipeIngredients" class="clearfix" ng-bind-html-unsafe="recipe.ingredients"></p>
-  <p id="recipeDirections" class="clearfix" ng-bind-html-unsafe="recipe.directions"></p>
+  <h3 id="recipeTitle" class="heading2 clearfix" ng-bind-html="recipe.title"></h3>
+  <h4 id="recipeSubtitle" class="clearfix" ng-bind-html="recipe.subtitle"></h4>
+  <p id="recipeIngredients" class="clearfix" ng-bind-html="recipe.ingredients"></p>
+  <p id="recipeDirections" class="clearfix" ng-bind-html="recipe.directions"></p>
+
+
 </div>
+<!-- <div btf-markdown="markdown">
+</div> -->
+<!-- <textarea name="Name" rows="8" cols="40">{{markdown}}</textarea> -->

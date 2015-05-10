@@ -1,8 +1,15 @@
 (function(){
   'use strict';
-
+  var deps = [
+  'ngRoute',
+  'cookbookApp.filters',
+  'cookbookApp.controllers',
+  'cookbookApp.services',
+  'cookbookApp.directives',
+  'btford.markdown'
+  ];
   // Declare app level module which depends on filters, and services
-  var app = angular.module('cookbookApp', ['ngRoute','cookbookApp.filters', 'cookbookApp.controllers', 'cookbookApp.services', 'cookbookApp.directives']);
+  var app = angular.module('cookbookApp', deps);
 
   app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
